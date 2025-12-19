@@ -1,11 +1,13 @@
 
 import stories from "../Data/stories";
 import StoryCard from "../UI/StoryCards";
+import ToggleButton from "./ToggleButton";
 
 
 export default function StoryList() {
   return (
     <div className="min-h-screen bg-white text-black p-6">
+      <ToggleButton/>
       <h1 className="text-3xl font-bold mb-8 text-center">
         Stories
       </h1>
