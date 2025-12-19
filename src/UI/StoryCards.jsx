@@ -6,9 +6,10 @@ export default function StoryCard({ story }) {
       <div className="
         border border-black
         p-6
+        shadow-xl
         cursor-pointer
         transition
-        hover:bg-black hover:text-white
+        hover:bg-stone-800 hover:text-white rounded-md 
       ">
         <h3 className="text-lg font-semibold">{story.title}</h3>
       </div>
