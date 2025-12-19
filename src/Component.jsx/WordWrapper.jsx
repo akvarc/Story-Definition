@@ -36,12 +36,12 @@ export default function WordWrapper({ text }) {
   return (
     <div className="max-w-4xl mx-auto px-4 text-black leading-8">
       {text.trim().split("\n").map((paragraph, pIndex) => {
-        // Split paragraph into words but keep spaces so it looks like natural paragraph
+
         const words = paragraph.split(/(\s+)/);
         return (
           <p key={pIndex} className="mb-6 text-justify">
             {words.map((word, wIndex) => {
-              if (/^\s+$/.test(word)) return word; // preserve spaces
+              if (/^\s+$/.test(word)) return word; 
               return (
                 <span
                   key={wIndex}
@@ -56,7 +56,6 @@ export default function WordWrapper({ text }) {
         );
       })}
 
-      {/* Modal */}
       {selectedWord && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white text-black max-w-md w-full rounded-xl shadow-lg p-6 relative">
