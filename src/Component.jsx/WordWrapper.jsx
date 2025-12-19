@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import TriggerContext from "../store/ToggleContext";
-
 
 export default function WordWrapper({ text }) {
   const { trigger } = useContext(TriggerContext);
@@ -9,6 +8,8 @@ export default function WordWrapper({ text }) {
   const [meaning, setMeaning] = useState("");
   const [loading, setLoading] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
+
+  const hideTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (!selectedWord) return;
@@ -49,6 +50,18 @@ export default function WordWrapper({ text }) {
     setSelectedWord(word);
   }
 
+  function scheduleHide() {
+    hideTimeoutRef.current = setTimeout(() => {
+      setSelectedWord("");
+    }, 150);
+  }
+
+  function cancelHide() {
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 text-black leading-8 relative">
       {text.trim().split("\n").map((paragraph, pIndex) => {
@@ -70,8 +83,14 @@ export default function WordWrapper({ text }) {
                   }
                   onMouseEnter={
                     trigger === "hover"
-                      ? (e) => handleTrigger(word, e)
+                      ? (e) => {
+                          cancelHide();
+                          handleTrigger(word, e);
+                        }
                       : undefined
+                  }
+                  onMouseLeave={
+                    trigger === "hover" ? scheduleHide : undefined
                   }
                 >
                   {word}
@@ -85,16 +104,13 @@ export default function WordWrapper({ text }) {
       {selectedWord && (
         <div
           className="fixed bg-black text-white max-w-xs text-sm rounded-lg shadow-lg p-4 z-50"
-          style={{
-            top: position.top,
-            left: position.left
-          }}
-          onMouseLeave={
-            trigger === "hover" ? () => setSelectedWord("") : undefined
-          }
+          style={{ top: position.top, left: position.left }}
+          onMouseEnter={trigger === "hover" ? cancelHide : undefined}
+          onMouseLeave={trigger === "hover" ? scheduleHide : undefined}
         >
           <div className="flex justify-between items-start mb-2">
             <span className="font-semibold">{selectedWord}</span>
+
             {trigger === "click" && (
               <button
                 onClick={() => setSelectedWord("")}

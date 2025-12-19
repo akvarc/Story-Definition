@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import WordWrapper from "./WordWrapper";
 import stories from "../Data/stories";
+import ToggleButton from "./ToggleButton";
 
 
 export default function StoryDetails() {
@@ -24,6 +25,8 @@ export default function StoryDetails() {
       <h2 className="text-2xl flex sm:text-3xl font-bold mb-6">
         <WordWrapper text = {story.title} />
       </h2>
+      <div className="flex justify-end">
+            <ToggleButton/></div>
 
       <div className="max-w-3xl mx-auto text-base sm:text-lg flex leading-relaxed">
         <WordWrapper text={story.content} />
