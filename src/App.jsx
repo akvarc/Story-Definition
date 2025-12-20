@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import StoryDetail from "./Component.jsx/StoryDetail";
-import StoryList from "./Component.jsx/StoryList";
+import StoryDetail from "./Component/StoryDetail";
+import StoryList from "./Component/StoryList";
 import { ToggleContext } from "./store/ToggleContext";
 
 export default function App() {
